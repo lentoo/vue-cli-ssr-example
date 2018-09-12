@@ -5,9 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:client": "vue-cli-service build",
+    "build:server": "cross-env WEBPACK_TARGET=node vue-cli-service build",
+    "build:win": "npm run build:server && move dist\\vue-ssr-server-bundle.json bundle && npm run build:client && move bundle dist\\vue-ssr-server-bundle.json",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "koa": "^2.5.3",
+    "koa-static": "^5.0.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
@@ -17,9 +22,13 @@
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-standard": "^3.0.3",
+    "cross-env": "^5.2.0",
+    "lodash.merge": "^4.6.1",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
-    "vue-template-compiler": "^2.5.17"
+    "vue-server-renderer": "^2.5.17",
+    "vue-template-compiler": "^2.5.17",
+    "webpack-node-externals": "^1.7.2"
   },
   "eslintConfig": {
     "root": true,
