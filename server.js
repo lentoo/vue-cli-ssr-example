@@ -5,8 +5,6 @@ const koaStatic = require("koa-static");
 const app = new Koa();
 
 const resolve = file => path.resolve(__dirname, file);
-const devServerBaseURL = process.env.DEV_SERVER_BASE_URL || "http://localhost";
-const devServerPort = process.env.DEV_SERVER_PORT || 3000;
 // 开放目录
 app.use(koaStatic(resolve("./dist")));
 // app.use(koaStatic(resolve("./dist/css")));
