@@ -1,12 +1,17 @@
 const fs = require("fs");
 const Koa = require("koa");
 const path = require("path");
-const koaStatic = require('koa-static')
+const koaStatic = require("koa-static");
 const app = new Koa();
 
 const resolve = file => path.resolve(__dirname, file);
-// 开放dist目录
-app.use(koaStatic(resolve('./dist')))
+const devServerBaseURL = process.env.DEV_SERVER_BASE_URL || "http://localhost";
+const devServerPort = process.env.DEV_SERVER_PORT || 3000;
+// 开放目录
+app.use(koaStatic(resolve("./dist")));
+// app.use(koaStatic(resolve("./dist/css")));
+// app.use(koaStatic(resolve("./dist/img")));
+// app.use(koaStatic(resolve("./dist/js")));
 
 // 第 2 步：获得一个createBundleRenderer
 const { createBundleRenderer } = require("vue-server-renderer");
@@ -26,8 +31,10 @@ function renderToString(context) {
     });
   });
 }
+
 // 第 3 步：添加一个中间件来处理所有请求
 app.use(async (ctx, next) => {
+  ctx.res.setHeader("Content-Type", "text/html");
   const context = {
     title: "ssr test",
     url: ctx.url
@@ -36,8 +43,7 @@ app.use(async (ctx, next) => {
   const html = await renderToString(context);
   ctx.body = html;
 });
-
-const port = 3000;
-app.listen(port, function() {
-  console.log(`server started at localhost:${port}`);
-});
+module.exports = app
+// app.listen(devServerPort, function() {
+//   console.log(`server started at localhost:${devServerPort}`);
+// });

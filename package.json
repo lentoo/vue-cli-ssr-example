@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "npm run build && node ./scripts/serve",
+    "serve:win": "npm run build:win && node ./scripts/serve",
     "build": "vue-cli-service build",
     "build:client": "vue-cli-service build",
     "build:server": "cross-env WEBPACK_TARGET=node vue-cli-service build",
     "build:win": "npm run build:server && move dist\\vue-ssr-server-bundle.json bundle && npm run build:client && move bundle dist\\vue-ssr-server-bundle.json",
+    "start": "cross-env NODE_ENV=production node ./scripts/start",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
