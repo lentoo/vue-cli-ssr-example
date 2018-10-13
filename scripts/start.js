@@ -1,4 +1,4 @@
-const app = require("../server.js");
+const app = require("../server/ssr");
 
 const port = process.env.PORT || 3000;
 

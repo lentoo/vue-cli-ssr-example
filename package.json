@@ -3,17 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "npm run build && node ./scripts/serve",
-    "serve:win": "npm run build:win && node ./scripts/serve",
+    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build:client": "vue-cli-service build",
     "build:server": "cross-env WEBPACK_TARGET=node vue-cli-service build",
-    "build:win": "npm run build:server && move dist\\vue-ssr-server-bundle.json bundle && npm run build:client && move bundle dist\\vue-ssr-server-bundle.json",
-    "start": "cross-env NODE_ENV=production node ./scripts/start",
-    "lint": "vue-cli-service lint"
+    "build:win": "npm run build:server && move dist\\vue-ssr-server-bundle.json bundle && npm run build:client && move bundle dist\\vue-ssr-server-bundle.json && cross-env WEBPACK_TARGET=node NODE_ENV=production node ./server/ssr.js",
+    "start": "cross-env NODE_ENV=production node ./server/ssr.js",
+    "lint": "vue-cli-service lint",
+    "dev:serve": "cross-env WEBPACK_TARGET=node node ./server/ssr.js",
+    "dev": "concurrently \"npm run serve\" \"npm run dev:serve\" "
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "koa": "^2.5.3",
+    "koa-router": "^7.4.0",
+    "koa-send": "^5.0.0",
     "koa-static": "^5.0.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
@@ -24,12 +28,15 @@
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-standard": "^3.0.3",
+    "concurrently": "^4.0.1",
     "cross-env": "^5.2.0",
     "lodash.merge": "^4.6.1",
+    "memory-fs": "^0.4.1",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "vue-server-renderer": "^2.5.17",
     "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.20.2",
     "webpack-node-externals": "^1.7.2"
   },
   "eslintConfig": {
