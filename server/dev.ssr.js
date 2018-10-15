@@ -11,6 +11,7 @@ const { createBundleRenderer } = require("vue-server-renderer");
 // 2、编译webpack配置文件
 const serverCompiler = webpack(webpackConfig)
 const mfs = new MemoryFS()
+// 指定输出到的内存流中
 serverCompiler.outputFileSystem = mfs
 
 // 3、监听文件修改，实时编译获取最新的 vue-ssr-server-bundle.json
