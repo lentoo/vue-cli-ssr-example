@@ -4,15 +4,17 @@ const MemoryFS = require('memory-fs')
 const fs = require('fs')
 const path = require('path')
 const Router = require('koa-router')
+// 1、webpack配置文件
 const webpackConfig = require('@vue/cli-service/webpack.config')
 const { createBundleRenderer } = require("vue-server-renderer");
 
-
+// 2、编译webpack配置文件
 const serverCompiler = webpack(webpackConfig)
 const mfs = new MemoryFS()
-serverCompiler.outputFileSystem = mfs 
+serverCompiler.outputFileSystem = mfs
 
-let bundle 
+// 3、监听文件修改，实时编译获取最新的 vue-ssr-server-bundle.json
+let bundle
 serverCompiler.watch({}, (err, stats) =>{
   if (err) {
     throw err
@@ -21,22 +23,23 @@ serverCompiler.watch({}, (err, stats) =>{
   stats.errors.forEach(error => console.error(error) )
   stats.warnings.forEach( warn => console.warn(warn) )
   const bundlePath = path.join(
-    webpackConfig.output.path,    
+    webpackConfig.output.path,
     'vue-ssr-server-bundle.json'
   )
   bundle = JSON.parse(mfs.readFileSync(bundlePath,'utf-8'))
   console.log('new bundle generated')
 })
 
-const handleSSR = async ctx => {
+const handleRequest = async ctx => {
   console.log('path', ctx.path)
   if (!bundle) {
-    ctx.body = '稍等一会在访问'
-    return 
+    ctx.body = '等待webpack打包完成后在访问在访问'
+    return
   }
+  // 4、获取最新的 vue-ssr-client-manifest.json
   const clientManifestResp = await axios.get('http://localhost:8080/vue-ssr-client-manifest.json')
   const clientManifest = clientManifestResp.data
-  
+
   const renderer = createBundleRenderer(bundle, {
     runInNewContext: false,
     template: fs.readFileSync(path.resolve(__dirname, "../src/index.temp.html"), "utf-8"),
@@ -54,13 +57,7 @@ function renderToString(context,renderer) {
 }
 
 const router = new Router()
-router.get('*', handleSSR)
 
-// app.use(router.routes()).use(router.allowedMethods())
-// const port = process.env.PORT || 3000;
-// app.listen(port,()=>{
-  
-//   console.log(`server started at localhost:${port}`);
-// })
+router.get("*", handleRequest);
+
 module.exports = router
-// export default handleSSR 
