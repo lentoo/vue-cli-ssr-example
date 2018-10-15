@@ -11,6 +11,7 @@ const router = isDev ? require('./dev.ssr') : require('./server')
 app.use(router.routes()).use(router.allowedMethods())
 // 开放目录
 app.use(koaStatic(resolve("../dist")));
+app.use(koaStatic(resolve("../public")));
 
 const port = process.env.PORT || 3000;
 
