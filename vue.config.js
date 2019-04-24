@@ -9,6 +9,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 module.exports = {
   baseUrl: isDev ? 'http://127.0.0.1:8080' : '',
   devServer: {
+    historyApiFallback: true,
     headers: {'Access-Control-Allow-Origin': '*'}
   },
   css: {
@@ -39,27 +40,6 @@ module.exports = {
     optimization: {
       splitChunks: undefined
     },
-    // optimization: {
-    //   splitChunks: {
-    //     chunks: "async",
-    //     minSize: 30000,
-    //     minChunks: 2,
-    //     maxAsyncRequests: 5,
-    //     maxInitialRequests: 3
-    //     // name: true,
-    //     // cacheGroups: {
-    //     //   default: {
-    //     //     minChunks: 1,
-    //     //     priority: -20,
-    //     //     reuseExistingChunk: true,
-    //     //   },
-    //     //   vendors: {
-    //     //     test: /[\\/]node_modules[\\/]/,
-    //     //     priority: -10
-    //     //   }
-    //     // }
-    //   }
-    // },
     plugins: [TARGET_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin()]
   }),
   chainWebpack: config => {
