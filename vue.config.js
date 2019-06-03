@@ -5,15 +5,14 @@ const merge = require('lodash.merge')
 const TARGET_NODE = process.env.WEBPACK_TARGET === 'node'
 const target = TARGET_NODE ? 'server' : 'client'
 const isDev = process.env.NODE_ENV !== 'production'
-
 module.exports = {
-  baseUrl: isDev ? 'http://127.0.0.1:8080' : '',
+  baseUrl: isDev ? 'http://127.0.0.1:8080' : '/',
   devServer: {
     historyApiFallback: true,
-    headers: {'Access-Control-Allow-Origin': '*'}
+    headers: { 'Access-Control-Allow-Origin': '*' }
   },
   css: {
-    extract: false
+    extract: process.env.NODE_ENV === 'production'
   },
   configureWebpack: () => ({
     // 将 entry 指向应用程序的 server / client 文件
@@ -38,7 +37,7 @@ module.exports = {
       })
       : undefined,
     optimization: {
-      splitChunks: undefined
+      splitChunks: TARGET_NODE ? false : undefined
     },
     plugins: [TARGET_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin()]
   }),
@@ -47,9 +46,14 @@ module.exports = {
       .rule('vue')
       .use('vue-loader')
       .tap(options => {
-        merge(options, {
+        return merge(options, {
           optimizeSSR: false
         })
       })
+
+    // fix ssr hot update bug
+    if (TARGET_NODE) {
+      config.plugins.delete("hmr");
+    }
   }
 }
