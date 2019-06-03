@@ -31,7 +31,7 @@ const handleRequest = async (ctx, next) => {
 
   const url = ctx.path
 
-  if (/\w+.[js|css|jpg|jpeg|png|gif|map]/.test(url)) {
+  if (/\w+.[js|css|jpg|jpeg|png|gif|map|ico]/.test(url)) {
     console.log(`proxy ${url}`)
     return await send(ctx, url, {root: path.resolve(__dirname,'../dist')})
   }
@@ -39,7 +39,7 @@ const handleRequest = async (ctx, next) => {
   ctx.res.setHeader("Content-Type", "text/html");
   const context = {
     title: "ssr test",
-    url: ctx.url
+    url
   };
   // 将 context 数据渲染为 HTML
   const html = await renderToString(context);
