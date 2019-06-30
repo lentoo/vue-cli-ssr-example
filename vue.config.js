@@ -6,7 +6,7 @@ const TARGET_NODE = process.env.WEBPACK_TARGET === 'node'
 const target = TARGET_NODE ? 'server' : 'client'
 const isDev = process.env.NODE_ENV !== 'production'
 module.exports = {
-  baseUrl: isDev ? 'http://127.0.0.1:8080' : '/',
+  baseUrl: isDev ? 'http://127.0.0.1:8080' : 'http://127.0.0.1:3000',
   devServer: {
     historyApiFallback: true,
     headers: { 'Access-Control-Allow-Origin': '*' }

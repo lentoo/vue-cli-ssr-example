@@ -30,8 +30,8 @@ function renderToString(context) {
 const handleRequest = async (ctx, next) => {
 
   const url = ctx.path
-
-  if (/\w+.[js|css|jpg|jpeg|png|gif|map|ico]/.test(url)) {
+  console.log(url)
+  if (url.includes('.')) {
     console.log(`proxy ${url}`)
     return await send(ctx, url, {root: path.resolve(__dirname,'../dist')})
   }

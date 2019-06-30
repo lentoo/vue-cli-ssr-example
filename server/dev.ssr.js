@@ -3,7 +3,7 @@ const axios = require('axios')
 const MemoryFS = require('memory-fs')
 const fs = require('fs')
 const path = require('path')
-const send = require('send')
+const send = require('koa-send')
 const Router = require('koa-router')
 // 1、webpack配置文件
 const webpackConfig = require('@vue/cli-service/webpack.config')
