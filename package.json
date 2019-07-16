@@ -21,7 +21,7 @@
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
     "koa-static": "^5.0.0",
-    "vue": "^2.5.17",
+    "vue": "2.5.17",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
@@ -36,8 +36,8 @@
     "memory-fs": "^0.4.1",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
-    "vue-server-renderer": "^2.5.17",
-    "vue-template-compiler": "^2.5.17",
+    "vue-server-renderer": "2.5.17",
+    "vue-template-compiler": "2.5.17",
     "webpack": "^4.20.2",
     "webpack-node-externals": "^1.7.2"
   },
