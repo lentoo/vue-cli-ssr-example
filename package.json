@@ -15,7 +15,7 @@
     "dev": "concurrently \"npm run serve\" \"npm run dev:serve\" "
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "koa": "^2.5.3",
     "koa-mount": "^4.0.0",
     "koa-router": "^7.4.0",
