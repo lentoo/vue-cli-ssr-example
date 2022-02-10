@@ -34,7 +34,7 @@
     "cross-env": "^5.2.0",
     "lodash.merge": "^4.6.1",
     "memory-fs": "^0.4.1",
-    "node-sass": "^4.9.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^7.0.1",
     "vue-server-renderer": "2.5.17",
     "vue-template-compiler": "2.5.17",
